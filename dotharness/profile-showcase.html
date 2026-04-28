@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DotHarness Project Showcase</title>
+  <style>
+    /* Brand display face — self-hosted Sora, identical to the DotCraft docs
+       (docs/.vitepress/theme/custom.css). Used for the wordmark + tagline. */
+    @font-face {
+      font-family: "Sora"; font-style: normal; font-weight: 600; font-display: swap;
+      src: url("./fonts/sora-latin-600-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Sora"; font-style: normal; font-weight: 700; font-display: swap;
+      src: url("./fonts/sora-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Sora"; font-style: normal; font-weight: 800; font-display: swap;
+      src: url("./fonts/sora-latin-800-normal.woff2") format("woff2");
+    }
+
+    :root {
+      color-scheme: dark;
+      /* Palette mirrors the DotCraft docs dark theme (.dark in custom.css). */
+      --shell: #141515;
+      --surface: #202020;
+      --surface-2: #2a2a2a;
+      --text: #eeeeec;
+      --muted: color-mix(in srgb, #eeeeec 66%, #141515);
+      --dimmed: color-mix(in srgb, #eeeeec 42%, #141515);
+      --line: color-mix(in srgb, #eeeeec 10%, transparent);
+      --line-strong: color-mix(in srgb, #eeeeec 18%, transparent);
+      --grad-1: #3a6cff;     /* brand blue  */
+      --grad-2: #6a93ff;
+      --grad-3: #9fb6ff;     /* periwinkle  */
+      --gold-glow: #ffcf11;  /* gold spark  */
+      --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.4);
+      --display: "Sora", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif;
+      --base: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 1600px;
+      margin: 0;
+      background: var(--shell);
+      font-family: var(--base);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Background language taken straight from .dark .dc-hero: a warm-dark neutral
+       base lit by a blue glow top-left and a gold glow top-right, echoing the
+       logo gradient diagonal. */
+    .frame {
+      position: relative;
+      width: 1600px;
+      padding: 60px 60px 64px;
+      overflow: hidden;
+      background:
+        radial-gradient(1180px 560px at 10% 12%, color-mix(in srgb, var(--grad-1) 24%, transparent) 0%, transparent 60%),
+        radial-gradient(900px 460px at 92% 6%, color-mix(in srgb, var(--gold-glow) 13%, transparent) 0%, transparent 62%),
+        radial-gradient(820px 520px at 82% 116%, color-mix(in srgb, var(--grad-3) 12%, transparent) 0%, transparent 60%),
+        linear-gradient(180deg, var(--shell) 0%, var(--surface) 100%);
+    }
+
+    /* ---------------- brand header ---------------- */
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 52px;
+      text-align: center;
+    }
+    .brand-row { display: flex; align-items: center; gap: 21px; }
+    .logo {
+      width: 68px;
+      height: 68px;
+      flex: none;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      box-shadow:
+        var(--shadow-lg),
+        0 0 0 7px color-mix(in srgb, var(--grad-1) 6%, transparent);
+    }
+    .logo svg { display: block; width: 100%; height: 100%; }
+
+    .wordmark {
+      font-family: var(--display);
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -0.022em;
+      line-height: 1;
+      /* Mostly the neutral wordmark with a periwinkle lift at the tail — the
+         docs doc-page h1 recipe, kept subtle so it reads with the mono logo. */
+      background: linear-gradient(100deg, var(--text) 0%, var(--text) 58%, color-mix(in srgb, var(--grad-2) 85%, var(--text)) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .tagline {
+      font-family: var(--display);
+      color: var(--muted);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.005em;
+    }
+
+    /* ---------------- product shots ---------------- */
+    .shots {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    /* Soft logo-tinted glow behind the band — gold top-right, blue bottom-left,
+       blurred, exactly like .dc-hero__media::before. */
+    .shots::before {
+      content: "";
+      position: absolute;
+      inset: -8% -4% -16%;
+      z-index: -1;
+      border-radius: 30px;
+      background:
+        radial-gradient(58% 70% at 82% 6%, color-mix(in srgb, var(--gold-glow) 20%, transparent) 0%, transparent 62%),
+        radial-gradient(64% 82% at 14% 98%, color-mix(in srgb, var(--grad-1) 26%, transparent) 0%, transparent 64%);
+      filter: blur(46px);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+    .shot {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+    }
+    .shot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, #eeeeec 6%, transparent);
+    }
+    .shot img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <main class="frame" aria-label="DotHarness products">
+
+    <header class="brand">
+      <div class="brand-row">
+        <span class="logo" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <rect width="512" height="512" fill="#050505"/>
+            <path fill="#fff" d="M155 182 C155 136 190 104 238 104 H415 V184 H319 V313 C319 371 278 408 228 408 V184 H155 Z"/>
+            <circle cx="138" cy="295" r="40" fill="#fff"/>
+          </svg>
+        </span>
+        <span class="wordmark">DotHarness</span>
+      </div>
+      <div class="tagline">Empowering the .NET ecosystem with modern Agent Harness.</div>
+    </header>
+
+    <section class="shots">
+      <div class="shot"><img src="../dotcraft/intro.png" alt="DotCraft"></div>
+      <div class="shot"><img src="../oratorio/banner.png" alt="Oratorio"></div>
+      <div class="shot"><img src="../dotcraft-unity/banner.png" alt="dotcraft-unity"></div>
+    </section>
+  </main>
+</body>
+</html>
